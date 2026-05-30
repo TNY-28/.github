@@ -30,10 +30,17 @@ Ajustar segun el proyecto (variables de entorno, version de Node/Python, etc).
 
 ### Git Method
 
-**GIT_METHOD.md** — Mi metodo personal de Git. Reglas fijas, reglas adaptables, flujo diario.
+**GIT_METHOD.md** — Metodo personal de Git y GitHub.
 
-## Notas
+Estructura:
+- Reglas FIJAS (commits, push, config, IA policy) — no cambian
+- Reglas ADAPTABLES (ramas, CI, testing, versiones) — se deciden por proyecto
+- Framework de decisiones — preguntas para definir que aplica a cada proyecto
+- Decisiones por proyecto — registro de que se decidio y por que
 
-- Estos templates son un punto de partida, no reglas rigidas
-- Cada proyecto puede ajustar lo que necesite en su propio repo
-- Commits siguen Conventional Commits (ver GIT_METHOD.md)
+## Filosofia
+
+- Lo FIJO da confianza. Lo ADAPTABLE da flexibilidad
+- Templates y workflows son punto de partida, no reglas rigidas
+- Cada proyecto ajusta lo que necesite, documentando el por que
+- Si una regla adaptable se repite en todos los proyectos, se promueve a fija
