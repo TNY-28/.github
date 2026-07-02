@@ -1,46 +1,49 @@
 # .github
 
-Templates globales y metodo de trabajo para todos mis repos.
+Global templates and working method for all my repos.
 
-## Contenido
+## Contents
 
 ### Templates
 
-- **Issue Templates** — Bug reports y feature requests (`ISSUE_TEMPLATE/`)
-- **PR Template** — Checklist para pull requests (`PULL_REQUEST_TEMPLATE/`)
+- **Issue Templates** — Bug reports and feature requests (`ISSUE_TEMPLATE/`)
+- **PR Template** — Checklist for pull requests (`PULL_REQUEST_TEMPLATE.md`)
 
 ### Workflow Templates
 
-Workflows de CI listos para copiar a cualquier proyecto:
+CI workflows ready to copy into any project:
 
-- **ci-react.yml** — CI para proyectos React/Vite (install, build)
-- **ci-django.yml** — CI para proyectos Django/Python (install, check, test)
+- **ci-react.yml** — CI for React/Vite projects (install, build)
+- **ci-django.yml** — CI for Django/Python projects (install, check, test)
 
-#### Como usar
+#### How to use
 
-Copiar el workflow al proyecto destino:
+Copy the workflow into the target project:
 
 ```bash
-# Desde la raiz del proyecto
+# From the project root
 mkdir -p .github/workflows
-cp ruta/al/template .github/workflows/ci.yml
+cp path/to/template .github/workflows/ci.yml
 ```
 
-Ajustar segun el proyecto (variables de entorno, version de Node/Python, etc).
+Adjust as needed per project (env variables, Node/Python version, etc).
+
+*(Automatic template suggestions in the Actions tab are an organization-only
+GitHub feature — personal accounts always need the manual copy step above.)*
 
 ### Git Method
 
-**GIT_METHOD.md** — Metodo personal de Git y GitHub.
+**GIT_METHOD.md** — Personal Git and GitHub method.
 
-Estructura:
-- Reglas FIJAS (commits, push, config, IA policy) — no cambian
-- Reglas ADAPTABLES (ramas, CI, testing, versiones) — se deciden por proyecto
-- Framework de decisiones — preguntas para definir que aplica a cada proyecto
-- Decisiones por proyecto — registro de que se decidio y por que
+Structure:
+- FIXED rules (commits, push, config, AI policy) — don't change
+- ADAPTABLE rules (branches, CI, testing, versioning) — decided per project
+- Decision framework — questions to define what applies to each project
+- Per-project decisions — log of what was decided and why
 
-## Filosofia
+## Philosophy
 
-- Lo FIJO da confianza. Lo ADAPTABLE da flexibilidad
-- Templates y workflows son punto de partida, no reglas rigidas
-- Cada proyecto ajusta lo que necesite, documentando el por que
-- Si una regla adaptable se repite en todos los proyectos, se promueve a fija
+- FIXED rules give confidence. ADAPTABLE rules give flexibility
+- Templates and workflows are a starting point, not rigid rules
+- Each project adjusts what it needs, documenting why
+- If an adaptable rule repeats across every project, it gets promoted to fixed
