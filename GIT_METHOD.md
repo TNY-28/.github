@@ -10,9 +10,27 @@ Las reglas ADAPTABLES se deciden por proyecto usando el framework de decisiones.
 
 ### Commits
 - Formato: **Conventional Commits** (feat:, fix:, docs:, refactor:, chore:, test:)
-- Idioma: ingles para el tipo y mensaje, espanol en el cuerpo si hace falta contexto
 - Un commit = un cambio logico. No mezclar cosas sin relacion
 - Nunca commitear secretos (.env, API keys, credenciales)
+
+### Idioma
+
+Aplica a todo el repo, no solo a commits:
+
+- Estructura (protocolo, no contenido) — SIEMPRE ingles:
+  tipo y scope de commit, descripcion corta del commit (header),
+  nombres de rama, labels, nombres de archivo, encabezados de templates
+  de issues/PRs, palabras clave de footer (`Closes`, `Fixes`, `BREAKING CHANGE`)
+- Contenido (texto libre) — espanol:
+  cuerpo del commit cuando hace falta contexto, lo que se llena adentro
+  de un issue o PR, README, documentacion, comentarios de codigo
+
+Motivo: la estructura es lo que cualquier colaborador o herramienta
+(commitlint, changelog generators) espera en ingles por convencion global.
+El contenido es donde se explica algo de verdad, y ahi conviene la fluidez
+del idioma nativo. Como beneficio adicional, escribir tipo+descripcion en
+ingles todos los dias es practica de ingles tecnico de bajo esfuerzo y
+alta frecuencia.
 
 ### Push
 - Push lo hago YO siempre. Ningun agente ni automatizacion pushea sin mi orden explicita
@@ -21,7 +39,7 @@ Las reglas ADAPTABLES se deciden por proyecto usando el framework de decisiones.
 ### Trabajo con agente/IA
 - El agente NO hace push ni commits automaticos sin mi aprobacion
 - Si el agente genera codigo, yo reviso antes de commitear
-- Co-Author en commits donde la IA genero codigo (transparencia)
+- Sin trailer de Co-Author en commits. El uso de IA se reconoce a nivel de proyecto (README o documentacion), no commit por commit
 - La IA funciona como un stackoverflow avanzado: genera, yo verifico y decido
 - Esto NO limita: si entiendo lo que hizo y esta correcto, commiteo sin problema
 
@@ -35,13 +53,24 @@ Las reglas ADAPTABLES se deciden por proyecto usando el framework de decisiones.
 ### Archivos obligatorios en todo repo
 - `.gitignore` (apropiado al stack)
 - `README.md` (minimo: que es, como correr, stack usado)
+- `LICENSE` — si el repo es publico
+- `.github/ISSUE_TEMPLATE/` y `.github/PULL_REQUEST_TEMPLATE.md` — si el proyecto usa issues/PRs (heredados de este repo .github como default; sobreescribir en el repo especifico solo si hace falta algo distinto)
+
+Nunca commitear (ademas de secretos):
+- `node_modules/`, `dist/`, `build/`, `__pycache__/`, `venv/`, `.venv/`
+- Archivos de IDE, salvo que se compartan a proposito
+- Dumps de base de datos, backups, datos de clientes o informacion laboral confidencial
+
+### Gists
+
+Gists: snippets sueltos o notas rapidas de codigo, nunca proyectos completos (para eso es un repo). Publico si es para compartir o mostrar en el portafolio, secreto si es solo para mi — pero secreto no es privado real, cualquiera con el link lo puede ver. No poner secretos ni credenciales ahi tampoco, misma regla que en cualquier repo.
 
 ---
 
 ## 2. Reglas ADAPTABLES (se deciden por proyecto)
 
 Estas reglas tienen un valor por defecto, pero se ajustan segun el contexto del proyecto.
-Cada proyecto documenta sus decisiones en la seccion 4.
+Cada proyecto documenta sus decisiones en su propia bitacora, usando el formato de la seccion 4.
 
 ### Estrategia de ramas
 
@@ -55,6 +84,14 @@ Cada proyecto documenta sus decisiones en la seccion 4.
 
 **Nombres de ramas (cuando se usen):** `tipo/descripcion-corta`
 - `feature/login-form`, `fix/api-timeout`, `docs/update-readme`
+
+### Estrategia de merge
+
+| Contexto | Estrategia |
+|----------|-----------|
+| PR con muchos commits tipo "wip" | Squash merge |
+| PR donde cada commit ya cuenta su propia historia | Merge normal |
+| Rebase de una rama compartida despues de que otros ya hicieron pull | Nunca |
 
 ### Versionado y releases
 
@@ -98,6 +135,27 @@ Workflow templates disponibles en este repo (`workflow-templates/`). Son punto d
 | Solo, proyecto profesional | Issues para bugs y features. Registro de decisiones |
 | Colaborativo | Issues + PRs obligatorios. Usar templates |
 
+Cuando un proyecto usa issues (segun la tabla ya existente), agrupar por tipo con el mismo criterio que los commits:
+
+- Tipo: `type:feature`, `type:bug`, `type:docs`, `type:refactor`, `type:chore`
+- Prioridad: `priority:high`, `priority:medium`, `priority:low`
+- Estado: `status:in-progress`, `status:blocked`, `status:review`
+
+Un issue se cierra solo al mergear el PR que lo resuelve, usando `Closes #N` en la descripcion del PR.
+
+### Visibilidad del repo
+
+**Pregunta clave:** Es informacion de un empleador o cliente, o tiene datos sensibles? Es una tarea de curso activa? Es portafolio?
+
+| Contexto | Visibilidad | README |
+|----------|-----------|--------|
+| Repo de un empleador o cliente | Privado, siempre, sin excepcion | Espanol |
+| Tarea de curso en grupo, curso activo | Privado (revisar politica de integridad academica de la UPB) | Espanol (equipo y profesores leen en espanol) |
+| Proyecto personal o portafolio, sin datos sensibles | Publico | Ingles |
+| Repo de metodo/templates (.github) | Publico | Ingles |
+
+Nota GitHub Pages: el sitio publicado siempre es visible aunque el repo fuente sea privado (salvo GitHub Enterprise). No poner secretos en lo que se renderiza.
+
 ---
 
 ## 3. Framework de decisiones
@@ -128,29 +186,18 @@ en el README del proyecto explicando el POR QUE. No basta con "porque si".
 
 ## 4. Decisiones por proyecto
 
-### kioto-pwa (React/Vite - frontend)
-- **Ramas:** directo a main (trabajo solo, repo privado, sin colaboradores futuros)
-- **Versionado:** sin tags por ahora (en desarrollo activo)
-- **CI/CD:** pendiente (cuando haya deploy)
-- **Testing:** manual por ahora, tests unitarios para logica critica
-- **Issues:** no por ahora
+Cada proyecto registra sus decisiones en su propia capa de construccion o en su README, usando este formato:
 
-### kioto-backend (Django/Python - backend)
-- **Ramas:** directo a main (mismo contexto que PWA)
-- **Versionado:** sin tags por ahora
-- **CI/CD:** pendiente
-- **Testing:** manual + tests Django para endpoints criticos
-- **Issues:** no por ahora
+### <nombre-del-proyecto> (<stack>)
+- **Ramas:** <estrategia y por que>
+- **Versionado:** <estrategia y por que>
+- **CI/CD:** <estrategia y por que>
+- **Testing:** <estrategia y por que>
+- **Issues:** <estrategia y por que>
 
-### .github (este repo - templates globales)
-- **Ramas:** directo a main (es config, no codigo)
-- **Versionado:** no aplica
-- **CI/CD:** no aplica
-- **Testing:** no aplica
-
-### Thony-arango (perfil README)
-- **Ramas:** directo a main
-- **Versionado:** no aplica
+Este documento no acumula registros: define el formato.
+La regla de promocion (seccion 3) se evalua revisando las bitacoras
+de los proyectos activos, no una lista central.
 
 ---
 
@@ -174,6 +221,28 @@ en el README del proyecto explicando el POR QUE. No basta con "porque si".
 6. git br -d feature/nombre  limpiar rama local
 ```
 
+### Contribuir a proyectos externos (fork)
+
+Uso fork solo cuando el repo es de otra persona/organizacion y no tengo permiso de push directo. Para mis propios repos (o los de un empleador/cliente) nunca hace falta fork, trabajo con rama normal.
+
+```
+1. Fork del repo original (boton Fork en GitHub)
+2. Clonar mi fork, no el original
+3. Agregar el original como remote upstream:
+   git remote add upstream <url-del-original>
+4. Rama para el cambio: git co -b fix/nombre-corto
+5. Commitear, push a mi fork
+6. Abrir PR desde mi fork hacia el repo original
+```
+
+Mantener el fork al dia antes de empezar algo nuevo:
+```
+git fetch upstream
+git checkout main
+git merge upstream/main
+git push
+```
+
 ---
 
 ## 6. Que NO hacer
@@ -184,7 +253,7 @@ en el README del proyecto explicando el POR QUE. No basta con "porque si".
 - Force push a main
 - Commitear archivos generados (node_modules, dist, build, __pycache__)
 - Ignorar el .gitignore
-- Dejar que un agente pushee o commitee sin tu revision
+- Dejar que un agente pushee o commitee sin mi revision
 
 ---
 
