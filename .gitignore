@@ -1,0 +1,20 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Env / secretos (por si acaso, aunque este repo no corre codigo)
+.env
+.env.local
+
+# Temporales / logs
+*.log
+*.bak
+*.tmp

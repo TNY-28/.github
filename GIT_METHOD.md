@@ -128,14 +128,14 @@ en el README del proyecto explicando el POR QUE. No basta con "porque si".
 
 ## 4. Decisiones por proyecto
 
-### proyecto-frontend (React/Vite - frontend)
+### kioto-pwa (React/Vite - frontend)
 - **Ramas:** directo a main (trabajo solo, repo privado, sin colaboradores futuros)
 - **Versionado:** sin tags por ahora (en desarrollo activo)
 - **CI/CD:** pendiente (cuando haya deploy)
 - **Testing:** manual por ahora, tests unitarios para logica critica
 - **Issues:** no por ahora
 
-### proyecto-backend (Django/Python - backend)
+### kioto-backend (Django/Python - backend)
 - **Ramas:** directo a main (mismo contexto que PWA)
 - **Versionado:** sin tags por ahora
 - **CI/CD:** pendiente
