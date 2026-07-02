@@ -36,13 +36,25 @@ GitHub feature — personal accounts always need the manual copy step above.)*
 
 ### Git Method
 
-**GIT_METHOD.md** — Personal Git and GitHub method.
+**git_method.md** — Personal Git and GitHub method.
 
 Structure:
 - FIXED rules (commits, push, config, AI policy) — don't change
 - ADAPTABLE rules (branches, CI, testing, versioning) — decided per project
 - Decision framework — questions to define what applies to each project
 - Per-project decisions — format each project uses to log its choices
+
+### Doc Model
+
+**doc_model.md** — Documentation and execution model for any project,
+with or without Git.
+
+Structure:
+- Two document natures: project docs (public, in Git) vs building
+  docs (personal, gitignored)
+- Standard project skeleton with a `building/` layer
+- Naming conventions: identifiers in English, prose in Spanish
+- Correction log that versions the model itself
 
 ### Other files
 - `.gitignore` — OS and editor noise
