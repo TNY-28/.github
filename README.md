@@ -2,6 +2,9 @@
 
 Global templates and working method for all my repos.
 
+The issue and PR templates here apply automatically as defaults to
+all my public repos that don't define their own.
+
 ## Contents
 
 ### Templates
@@ -39,7 +42,11 @@ Structure:
 - FIXED rules (commits, push, config, AI policy) — don't change
 - ADAPTABLE rules (branches, CI, testing, versioning) — decided per project
 - Decision framework — questions to define what applies to each project
-- Per-project decisions — log of what was decided and why
+- Per-project decisions — format each project uses to log its choices
+
+### Other files
+- `.gitignore` — OS and editor noise
+- `LICENSE` — MIT
 
 ## Philosophy
 
