@@ -60,6 +60,8 @@ Nunca commitear (ademas de secretos):
 - `node_modules/`, `dist/`, `build/`, `__pycache__/`, `venv/`, `.venv/`
 - Archivos de IDE, salvo que se compartan a proposito
 - Dumps de base de datos, backups, datos de clientes o informacion laboral confidencial
+- `building/` — capa de construccion personal de cada proyecto
+  (definida en doc_model.md); se respalda aparte, nunca en el repo
 
 ### Gists
 
@@ -261,7 +263,7 @@ git push
 
 Este documento es SOLO Git y GitHub.
 
-- **Metodo general de desarrollo** (como analizar, disenar, construir) → `Manual-de-Metodo-Analisis-y-Diseno.md` (carpeta personal)
+- **Modelo documental** (como se documenta y ejecuta cada proyecto) → `doc_model.md` (este repo)
 - **Stack y herramientas** → se decide por proyecto, no globalmente. Cada proyecto elige su stack
 - **Organizacion digital** → proyecto aparte (estructura de carpetas, cuentas, PC)
 

@@ -14,6 +14,9 @@ desktop.ini
 .env
 .env.local
 
+# Capa de construccion personal (ver doc_model.md)
+building/
+
 # Temporales / logs
 *.log
 *.bak
