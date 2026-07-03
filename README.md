@@ -66,3 +66,6 @@ Structure:
 - Templates and workflows are a starting point, not rigid rules
 - Each project adjusts what it needs, documenting why
 - If an adaptable rule repeats across every project, it gets promoted to fixed
+
+---
+*Built with AI assistance (Claude). Review and decisions by Anthony Arango.*
