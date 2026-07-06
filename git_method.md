@@ -17,11 +17,11 @@ Las reglas ADAPTABLES se deciden por proyecto usando el framework de decisiones.
 
 Aplica a todo el repo, no solo a commits:
 
-- Estructura (protocolo, no contenido) — SIEMPRE ingles:
+- Estructura (protocolo, no contenido) - SIEMPRE ingles:
   tipo y scope de commit, descripcion corta del commit (header),
   nombres de rama, labels, nombres de archivo, encabezados de templates
   de issues/PRs, palabras clave de footer (`Closes`, `Fixes`, `BREAKING CHANGE`)
-- Contenido (texto libre) — espanol:
+- Contenido (texto libre) - espanol:
   cuerpo del commit cuando hace falta contexto, lo que se llena adentro
   de un issue o PR, README, documentacion, comentarios de codigo
 
@@ -53,19 +53,19 @@ alta frecuencia.
 ### Archivos obligatorios en todo repo
 - `.gitignore` (apropiado al stack)
 - `README.md` (minimo: que es, como correr, stack usado)
-- `LICENSE` — si el repo es publico
-- `.github/ISSUE_TEMPLATE/` y `.github/PULL_REQUEST_TEMPLATE.md` — si el proyecto usa issues/PRs (heredados de este repo .github como default; sobreescribir en el repo especifico solo si hace falta algo distinto)
+- `LICENSE` - si el repo es publico
+- `.github/ISSUE_TEMPLATE/` y `.github/PULL_REQUEST_TEMPLATE.md` - si el proyecto usa issues/PRs (heredados de este repo .github como default; sobreescribir en el repo especifico solo si hace falta algo distinto)
 
 Nunca commitear (ademas de secretos):
 - `node_modules/`, `dist/`, `build/`, `__pycache__/`, `venv/`, `.venv/`
 - Archivos de IDE, salvo que se compartan a proposito
 - Dumps de base de datos, backups, datos de clientes o informacion laboral confidencial
-- `building/` — capa de construccion personal de cada proyecto
+- `building/` - capa de construccion personal de cada proyecto
   (definida en doc_model.md); se respalda aparte, nunca en el repo
 
 ### Gists
 
-Gists: snippets sueltos o notas rapidas de codigo, nunca proyectos completos (para eso es un repo). Publico si es para compartir o mostrar en el portafolio, secreto si es solo para mi — pero secreto no es privado real, cualquiera con el link lo puede ver. No poner secretos ni credenciales ahi tampoco, misma regla que en cualquier repo.
+Gists: snippets sueltos o notas rapidas de codigo, nunca proyectos completos (para eso es un repo). Publico si es para compartir o mostrar en el portafolio, secreto si es solo para mi - pero secreto no es privado real, cualquiera con el link lo puede ver. No poner secretos ni credenciales ahi tampoco, misma regla que en cualquier repo.
 
 ---
 
@@ -263,12 +263,12 @@ git push
 
 Este documento es SOLO Git y GitHub.
 
-- **Modelo documental** (como se documenta y ejecuta cada proyecto) → `doc_model.md` (este repo)
-- **Stack y herramientas** → se decide por proyecto, no globalmente. Cada proyecto elige su stack
-- **Organizacion digital** → proyecto aparte (estructura de carpetas, cuentas, PC)
+- **Modelo documental** (como se documenta y ejecuta cada proyecto) -> `doc_model.md` (este repo)
+- **Stack y herramientas** -> se decide por proyecto, no globalmente. Cada proyecto elige su stack
+- **Organizacion digital** -> proyecto aparte (estructura de carpetas, cuentas, PC)
 
 Git se acopla al metodo general porque:
-- El metodo define fases (pensar → verificar → construir)
+- El metodo define fases (pensar -> verificar -> construir)
 - Git entra en la fase de construir: cuando ya se decidio QUE hacer, Git registra el COMO se hizo
 - Los commits reflejan cambios concretos del codigo, no fases del plan
 
