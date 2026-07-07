@@ -9,6 +9,6 @@ Closes #
 
 ## Checklist
 - [ ] Corre localmente sin errores
-- [ ] Paso el CI (si aplica)
-- [ ] Actualice el README/docs si hacia falta
-- [ ] No deje console.log / prints de debug
+- [ ] Pasó el CI (si aplica)
+- [ ] Actualicé el README/docs si hacía falta
+- [ ] No dejé console.log / prints de debug

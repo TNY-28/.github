@@ -6,7 +6,7 @@ labels: type:bug
 ---
 
 ## Description
-Que esta pasando?
+¿Qué está pasando?
 
 ## Steps to reproduce
 1.

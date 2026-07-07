@@ -44,9 +44,9 @@ Structure:
 - Decision framework - questions to define what applies to each project
 - Per-project decisions - format each project uses to log its choices
 
-### Doc Model
+### Doc Method
 
-**doc_model.md** - Documentation and execution model for any project,
+**doc_method.md** - Documentation and execution model for any project,
 with or without Git.
 
 Structure:
