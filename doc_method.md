@@ -1,4 +1,4 @@
-# Doc Method - Anthony Arango (v1.4)
+# Doc Method - Anthony Arango (v1.5)
 
 Mi método estándar para documentar y ejecutar cualquier proyecto, personal o de un empleador/cliente. Se aplica en el proyecto activo y se replica en los que vengan.
 
@@ -12,6 +12,21 @@ Mi método estándar para documentar y ejecutar cualquier proyecto, personal o d
 - **Documentos de construcción** - el *cómo lo hice*. Míos, no suben, para apoyarme. Para mí.
 
 Se retroalimentan, pero **no se mezclan**. Nunca subo material de construcción a lo oficial.
+
+### Nivel de documento y dueño del dato
+
+Cada hecho tiene UN documento dueño.
+
+- **Internos** (estado sellado, logs, notas de trabajo): dueño único del dato, cero duplicación, apuntador al documento compañero. El lector soy yo y sé navegar.
+- **Oficiales** (los que lee un tercero en frío: pitch, dominio, README): **auto-contenidos** y en lenguaje claro. Pueden reafirmar un hecho para leerse solos, pero al reafirmarlo **no se vuelven dueños**: la fuente sigue siendo el documento dueño. De su contenido propio sí son dueños (el documento de dominio es el dueño de los hechos del mundo).
+- La regla no es "no repetir", es **repetir sin ser dueño**: si el hecho cambia, se corrige en el dueño y se propaga.
+- Lo que se saca de un documento oficial no son los hechos repetidos, es el **material interno**: estrategia, decisiones abiertas, entradas de log.
+
+### Capas de contenido
+
+El contenido de **dominio** dice QUÉ ES el mundo; el de **diseño** dice QUÉ HACE el sistema. Prueba: si el proyecto se cancela mañana, ¿esto sigue siendo cierto? Si no, no es dominio.
+
+Motivo: las capas tienen vidas distintas. Los hechos del mundo sobreviven a varios rediseños; si se mezclan, al rediseñar no se sabe qué botar y se pierde lo que costó levantar.
 
 ---
 
@@ -65,12 +80,22 @@ Para el resto de frentes:
 - **Si surge otro frente en medio** (y va a surgir): lo anoto en una línea y sigo. No lo persigo. Perseguirlo es rodar.
 - **Al cerrar:** pido los documentos actualizados y actualizo `sealed_state` si hubo decisión nueva.
 
+### Especie de las preguntas abiertas
+
+Toda pregunta abierta lleva **especie** y **dueño**:
+
+- **Hecho por levantar:** se resuelve yendo a mirar; la respuesta vuelve al documento de dominio.
+- **Decisión pendiente:** se resuelve decidiendo; la respuesta va al log de decisiones.
+
+Sin dueño la pregunta se pudre. Sin especie alguien "investiga" afuera algo que solo se resuelve decidiendo.
+
 ---
 
 ## 5. El log de correcciones (lo que rompe el ciclo)
 
 - Uno **por proyecto** (`correction_log.md`), no global. Cada proyecto corrige lo suyo.
-- **Disparador concreto:** cada vez que digo "me toca volver atrás" o deshago algo ya decidido -> una entrada. Sin disparador, se queda vacía.
+- **Disparador mecánico, no juicio de madurez:** si tocó volver atrás sobre algo **escrito y cerrado** -> una entrada. "Es que el proyecto no estaba cimentado" es la excusa que reaparece siempre; el disparador no la escucha.
+- Cambiar de opinión antes de que exista algo sellado es **explorar, no corregir**: eso no entra. Entra lo que quedó escrito y tocó devolver, no lo que murió en una conversación.
 - **Formato corto:** fecha | qué decidí mal | qué me obligó a cambiarlo | qué aprendo.
 - Se lee junto al `sealed_state` al empezar.
 
@@ -114,6 +139,7 @@ Este documento es SOLO documentación y ejecución de proyectos. Git y GitHub ->
 
 **Formato:** fecha | vX -> vY | qué decidí mal | qué me obligó a cambiarlo | qué aprendo. Extiende el formato de la sección 5 con el rango de versión, porque este log versiona el modelo mismo.
 
+- 2026-07 | v1.4 -> v1.5 | (1) no fijar dueño del dato ni política de duplicación por nivel de documento: los internos navegan con apuntadores, pero un oficial que lee un tercero en frío tiene que leerse solo, y eso nunca estuvo escrito; (2) no separar el contenido de dominio (qué es el mundo) del de diseño (qué hace el sistema), dos capas con vidas distintas; (3) no clasificar las preguntas abiertas por especie (hecho por levantar / decisión pendiente) ni exigirles dueño; (4) dejar el disparador del log de correcciones sujeto a interpretación: "deshago algo ya decidido" no exigía que estuviera escrito y cerrado | usar el método en un proyecto con documentos oficiales para terceros: hechos repetidos quedaron sin fuente clara, preguntas abiertas sin especie se "investigaron" cuando solo había que decidir y sin dueño se pudrieron, y la excusa "el proyecto no estaba cimentado" bloqueó entradas del log que sí correspondían | los principios de contenido se asientan en la capa de método, no se reinventan por proyecto; un disparador mecánico ("quedó escrito y tocó devolver") resiste las excusas que un juicio de madurez no
 - 2026-07 | v1.3 -> v1.4 | (1) nombrar el documento base del método "doc_model" mientras la capa especializada se llama "git_method" - asimetría que causó confusión repetida al nombrarlos en uso real; (2) nunca declarar explícitamente que este documento es la capa base de la que `git_method.md` hereda las reglas transversales; (3) declarar el formato de este log sin un campo para el rango de versión, cuando sus propias entradas siempre lo necesitaron; (4) no tener regla de nombres para archivos compuestos que navega un humano (hojas de cálculo, pestañas, capas de diseño) y no son código ni protocolo; (5) no declarar `workflow-templates/` como excepción de precedencia externa, pese a que el nombre lo impone la convención de GitHub y no sigue `NN-kebab-case` | una auditoría real del repo contra sus propias reglas encontró los cinco puntos a la vez: la confusión de nombres al usar los documentos, este log citando rangos de versión que su formato declarado no contemplaba, y dos vacíos de regla (nombres no-código, `workflow-templates/`) que nadie había necesitado nombrar hasta ahora | un punto ciego que aparece en una auditoría se cierra completo en la misma pasada: rename a `doc_method.md`, declaración de precedencia entre capas (`git_method.md` sube a v2), formato de este log extendido con campo de versión y las tres entradas anteriores reformateadas, regla de nombres para archivos compuestos no-código (sección 6), y `workflow-templates/` sumado a las excepciones de precedencia externa (sección 6)
 - 2026-07 | v1.2 -> v1.3 | la convención de escritura regulaba idioma y tildes pero no la tipografía del contenido; los documentos generados con IA llegaron con rayas largas, flechas unicode y símbolos que mi teclado no produce | mantener a mano archivos con caracteres que no puedo teclear rompe la mantenibilidad que exige la sección 7 | lo generado hereda la tipografía de la herramienta; la convención debe fijar el alfabeto de trabajo explícito, y el punto de aplicación es la herramienta que genera, no la corrección manual después
 - 2026-07 | v1.1 -> v1.2 | (1) dejar el respaldo de `building/` como "aparte (OneDrive o repo privado)", sin destino por defecto, sin regla para proyectos sin Git y sin obligatoriedad; (2) el frente de alcance no separaba visión de iteración - respondí las 5 preguntas mezclando el norte del proyecto con la prueba concreta, y el piloto quedó inmedible | (1) un proyecto real sin Git dejó la carpeta completa sin copia y sin criterio de dónde respaldarla; (2) sellar un alcance que no se podía medir | (1) una regla de respaldo sin destino concreto no es regla, es intención; (2) la visión orienta pero no se testea, solo se sella lo que una iteración puede medir
