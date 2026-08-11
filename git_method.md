@@ -1,4 +1,4 @@
-# Git Method - Anthony Arango (v2)
+# Git Method - Anthony Arango (v3)
 
 Mi método personal para trabajar con Git y GitHub.
 Aplica a todos mis proyectos. Las reglas FIJAS son innegociables.
@@ -39,9 +39,13 @@ alta frecuencia.
 ### Trabajo con agente/IA
 - El agente NO hace push ni commits automáticos sin mi aprobación
 - Si el agente genera código, yo reviso antes de commitear
-- Sin trailer de Co-Author en commits. El uso de IA se reconoce a nivel de proyecto (README o documentación), no commit por commit
+- Sin trailer de Co-Author en commits
 - La IA funciona como un stackoverflow avanzado: genera, yo verifico y decido
 - Esto NO limita: si entiendo lo que hizo y está correcto, commiteo sin problema
+- El uso de IA no se documenta a nivel de proyecto por defecto: es
+  herramienta de trabajo, no un hecho que amerite declaración aparte. Si un
+  curso, empleador o cliente exige declararlo explícitamente, se declara
+  donde ese contexto lo pida - eso se decide por proyecto, no acá
 
 ### Config global de Git
 - `pull.rebase = true`
@@ -277,6 +281,8 @@ Git se acopla al método general porque:
 ### Log de cambios del método
 
 - **2026-07 | v1 -> v2 |** Decidí mal: no darle a este documento número de versión ni log de cambios propio, a diferencia de `doc_method.md`, que sí versiona y registra sus correcciones. Qué me obligó a cambiarlo: `sealed_state.md` ya citaba "git_method.md v2" sin que el archivo tuviera ese número en ningún lado, y la declaración explícita de jerarquía entre capas (ver arriba) exigía dejar constancia de cuándo y por qué cambia esta capa. Qué aprendo: si una capa del método se corrige y se vuelve a sellar, necesita el mismo tratamiento que `doc_method.md` - versión en el título y log de cambios propio, no solo el sellado externo en `sealed_state.md`.
+
+- **2026-08 | v2 -> v3 |** Decidí mal: sellar como regla FIJA que el uso de IA se reconoce siempre a nivel de proyecto (README o documentación), sin condición de cuándo aplica. Qué me obligó a cambiarlo: en un frente real (el README de arkhon) declarar el uso de IA se sintió como ruido que resta calidad al documento, no como información que el lector necesite - el uso de asistentes de IA ya es práctica común y esperada, no una revelación que alguien esté esperando encontrar. La regla imponía una declaración universal sin preguntar si el contexto la pedía. Qué aprendo: una regla FIJA sobre CÓMO se comunica algo no debería ser más rígida que la razón que la sostiene. Lo que de verdad protegía esta regla - revisar antes de commitear, no automatizar push, no ensuciar el historial con trailers de Co-Author - sigue FIJO y no se toca. Lo que se vuelve condicional es solo la declaración pública en sí, que ahora depende del contexto (un curso, un empleador, un cliente) y ya no es automática por proyecto propio.
 
 ---
 
