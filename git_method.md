@@ -1,4 +1,4 @@
-# Git Method - Anthony Arango (v3)
+# Git Method - Anthony Arango (v4)
 
 Mi método personal para trabajar con Git y GitHub.
 Aplica a todos mis proyectos. Las reglas FIJAS son innegociables.
@@ -227,6 +227,19 @@ de los proyectos activos, no una lista central.
 6. git br -d feature/nombre  limpiar rama local
 ```
 
+### Antes de tomar, asignar o revisar un issue o PR (trabajo colaborativo)
+
+El estado de un issue no está en su cuerpo, está en lo que pasa a su alrededor, y con más de una persona empujando se vence en minutos. Es un hecho por levantar (`doc_method.md`, sección 4): se resuelve yendo a mirar, antes de asignar, recomendar o escribir un brief.
+
+1. **El issue:** abierto o cerrado, dueño y prioridad.
+2. **Lo que lo toca:** PRs abiertos o mergeados que lo citan, ramas con su número, y fecha y autor del último commit.
+3. **El criterio al que sirve** y si bloquea la entrega o solo suma evidencia. Sin criterio no hay prioridad.
+4. **Qué cambió desde el último reporte.**
+
+Si falta alguno de los cuatro, el primer paso es de reconocimiento, no de ejecución.
+
+El esfuerzo se dirige por el criterio, no por lo que está a la mano: primero lo que bloquea la entrega, y la profundidad de una revisión sigue al criterio que el PR sirve (lo que bloquea se revisa contra el texto del criterio y corriéndolo; lo que solo suma evidencia, leído y con el CI). La técnica de revisión vive en la skill `qa-review` de cada proyecto; esto solo decide a qué se le aplica y cuándo.
+
 ### Contribuir a proyectos externos (fork)
 
 Uso fork solo cuando el repo es de otra persona/organización y no tengo permiso de push directo. Para mis propios repos (o los de un empleador/cliente) nunca hace falta fork, trabajo con rama normal.
@@ -283,6 +296,8 @@ Git se acopla al método general porque:
 - **2026-07 | v1 -> v2 |** Decidí mal: no darle a este documento número de versión ni log de cambios propio, a diferencia de `doc_method.md`, que sí versiona y registra sus correcciones. Qué me obligó a cambiarlo: `sealed_state.md` ya citaba "git_method.md v2" sin que el archivo tuviera ese número en ningún lado, y la declaración explícita de jerarquía entre capas (ver arriba) exigía dejar constancia de cuándo y por qué cambia esta capa. Qué aprendo: si una capa del método se corrige y se vuelve a sellar, necesita el mismo tratamiento que `doc_method.md` - versión en el título y log de cambios propio, no solo el sellado externo en `sealed_state.md`.
 
 - **2026-08 | v2 -> v3 |** Decidí mal: sellar como regla FIJA que el uso de IA se reconoce siempre a nivel de proyecto (README o documentación), sin condición de cuándo aplica. Qué me obligó a cambiarlo: en un frente real (el README de arkhon) declarar el uso de IA se sintió como ruido que resta calidad al documento, no como información que el lector necesite - el uso de asistentes de IA ya es práctica común y esperada, no una revelación que alguien esté esperando encontrar. La regla imponía una declaración universal sin preguntar si el contexto la pedía. Qué aprendo: una regla FIJA sobre CÓMO se comunica algo no debería ser más rígida que la razón que la sostiene. Lo que de verdad protegía esta regla - revisar antes de commitear, no automatizar push, no ensuciar el historial con trailers de Co-Author - sigue FIJO y no se toca. Lo que se vuelve condicional es solo la declaración pública en sí, que ahora depende del contexto (un curso, un empleador, un cliente) y ya no es automática por proyecto propio.
+
+- **2026-11-05 | v3 -> v4 |** Decidí mal: asignar, recomendar y escribir briefs sobre issues y PRs de un equipo tomando como única fuente el cuerpo del issue o un archivo, y repartir el esfuerzo por lo que quedaba a mano. Qué me obligó a cambiarlo: en arkhon, a cinco días de la entrega, el mismo error se repitió en varios frentes: una rama citada en un brief sin verificarla, una firma recomendada sin leer el ADR que ya la decidía, y un issue dado por pendiente cuando su PR llevaba doce días mergeado. Entre tanto, el esfuerzo de la noche fue a un criterio adicional mientras dos issues P0 del caso 3 seguían, uno sin rama y otro sin commits desde el 2026-10-23. Qué aprendo: el estado de un issue vive en sus PRs, ramas y commits, y se levanta antes de decidir; el esfuerzo se dirige por el criterio que bloquea la entrega. La técnica de revisión no era el hueco (ya está en la skill `qa-review`): lo era lo que se hace antes de revisar.
 
 ---
 
