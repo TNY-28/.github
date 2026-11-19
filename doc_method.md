@@ -1,8 +1,8 @@
-# Doc Method - Anthony Arango (v1.7)
+# Doc Method - Anthony Arango (v1.8)
 
 Mi método estándar para documentar y ejecutar cualquier proyecto, personal o de un empleador/cliente. Se aplica en el proyecto activo y se replica en los que vengan.
 
-**Regla cero:** esta es la versión vigente. No se pule. Cualquier duda o mejora imaginada se anota y se sigue; no se rediseña el modelo por leerlo. **Solo se cambia cuando usarlo en un frente real lo rompe** (algo se contradice, bloquea, o no se puede cumplir): eso se registra en el log de correcciones del modelo (sección 8) y sube de versión. Leerlo para buscarle fallas es el reflejo de pulir; resístelo. El modelo sirve para *terminar* proyectos, no para quedar bonito.
+**Regla cero:** esta es la versión vigente. No se pule. Cualquier duda o mejora imaginada se anota y se sigue; no se rediseña el modelo por leerlo. **Solo se cambia cuando usarlo en un frente real lo rompe** (algo se contradice, bloquea, o no se puede cumplir): eso se registra en el log de correcciones del modelo (sección 8) y sube de versión. Leerlo para buscarle fallas es el reflejo de pulir, y lo resisto. El modelo sirve para *terminar* proyectos, no para quedar bonito.
 
 ---
 
@@ -20,6 +20,7 @@ Cada hecho tiene UN documento dueño.
 - **Internos** (estado sellado, logs, notas de trabajo): dueño único del dato, cero duplicación, apuntador al documento compañero. El lector soy yo y sé navegar.
 - **Oficiales** (los que lee un tercero en frío: pitch, dominio, README): **auto-contenidos** y en lenguaje claro. Pueden reafirmar un hecho para leerse solos, pero al reafirmarlo **no se vuelven dueños**: la fuente sigue siendo el documento dueño. De su contenido propio sí son dueños (el documento de dominio es el dueño de los hechos del mundo).
 - La regla no es "no repetir", es **repetir sin ser dueño**: si el hecho cambia, se corrige en el dueño y se propaga.
+- **Propagar es recorrer todos los lugares donde vive el hecho antes de cerrar:** el modelo, el código y los documentos, en las dos direcciones. Lo que agrega un documento lo cruzo con el código, y lo que cambia el código lo cruzo con los documentos. Lo mismo cuando cambia la **razón** de una decisión sellada: reviso lo que se armó sobre ella (una regla de pantalla, un cálculo, una validación), porque si la razón ya no existe, eso se queda estorbando.
 - Lo que se saca de un documento oficial no son los hechos repetidos, es el **material interno**: estrategia, decisiones abiertas, entradas de log.
 
 ### Capas de contenido
@@ -28,25 +29,58 @@ El contenido de **dominio** dice QUÉ ES el mundo; el de **diseño** dice QUÉ H
 
 Motivo: las capas tienen vidas distintas. Los hechos del mundo sobreviven a varios rediseños; si se mezclan, al rediseñar no se sabe qué botar y se pierde lo que costó levantar.
 
+### Referencias, base normativa y principios
+
+- **Referencias:** cada una lleva URL, tipo de fuente (norma, documentación oficial, libro, artículo, blog, material de clase) y cómo la consulté: completa, una parte, una vista previa o un resumen que hizo otro. El original y el resumen no valen lo mismo, y lo dejo dicho. Antes de citar una referencia la abro y confirmo que dice lo que le atribuyo; que el enlace abra no basta.
+- **Base normativa:** al empezar, cada proyecto dice qué estándares sigue (normas, notaciones, guías de estilo). La escribo en el primer documento oficial de diseño y la sello en `sealed_state`. Si el proyecto no es de software, "ninguna" es una respuesta válida.
+- **Principios de diseño:** los escribo explícitos. Si uno es discutible, va en un ADR (registro de decisión de arquitectura, archivo `adr_NN_...`): la decisión, la posición contraria y por qué no la tomé.
+- **Un ADR no es el `decision_log`:** el `decision_log` es mío, vive en `building/` y guarda todas las decisiones, cortas. Un ADR es oficial, lo lee un tercero y solo existe para lo discutible del diseño.
+
+### Diagramas
+
+- **Cada diagrama es una vista:** responde las preguntas de un lector concreto. Así lo plantea ISO/IEC/IEEE 42010 [1]: la vista se arma desde un punto de vista, y el punto de vista define a quiénes atiende y qué les preocupa. Por eso cada diagrama dice qué vista es, en qué notación está, para quién es y cómo se lee. El lector va en la leyenda o en la tabla de vistas del proyecto, no como encabezado.
+- **Título** con el tipo, el alcance y la notación [2]. Ejemplo: "ER conceptual - Inventario de equipos (Information Engineering)".
+- **Una sola notación por dibujo.** En software cada vista tiene notación fija:
+
+| Vista | Qué responde | Notación |
+|---|---|---|
+| Arquitectura | qué partes tiene el sistema, con qué habla y cómo se divide | C4: contexto, contenedores y componentes [2] |
+| Código | qué clases hay y cómo se componen | UML 2.5.1 [3] |
+| Datos | qué se guarda y cómo se relaciona | Diagrama entidad-relación (ER) en pata de gallo, de Information Engineering [4] |
+
+  Si un proyecto necesita otra vista, la declara en su base normativa con su notación.
+- **Conceptual y físico:** el ER conceptual muestra los conceptos del negocio, sin atributos y con las palabras con que los nombra el negocio; si quien opera no reconocería una caja, no va ahí. Esas palabras no las invento: las pregunto antes de usarlas, como cualquier otro hecho del mundo. El ER físico muestra cómo se guarda (tablas, columnas, llaves); como lo lee quien recibe el código, va con identificadores en inglés y notas en español.
+- **Etiquetas:** cada relación se lee como una frase de la primera entidad a la segunda, por ejemplo "Pedido tiene Líneas". Nada de palabras sueltas como "usa" [2].
+- **Leyenda:** dice qué significan las formas, las líneas y los símbolos tal como se ven en el dibujo, no como los describe la notación ni el código de la herramienta. Las siglas van definidas ahí [2]. La compruebo dibujando antes de cerrarla.
+- **Caracteres:** el texto del dibujo (etiquetas, leyendas, notas) usa los mismos caracteres de mi teclado que el resto de mis documentos.
+- Lo propio de una herramienta (cómo dibuja cierta versión, sus trucos de sintaxis) va al documento del proyecto, no aquí.
+
+**Fuentes de esta sección**
+
+1. ISO/IEC/IEEE 42010:2022, *Software, systems and enterprise - Architecture description*, segunda edición (2022-11). Norma internacional. Vista previa oficial: https://cdn.standards.iteh.ai/samples/74393/fc7b7f103d8446a4b87a3261e31370d3/ISO-IEC-IEEE-42010-2022.pdf . Consulté la vista previa, que trae las definiciones de vista, punto de vista, interesado y preocupación (cláusula 3); el texto completo es de pago.
+2. Brown, S. *The C4 model for visualising software architecture*. Sitio oficial de su creador: https://c4model.com . Consulta directa de https://c4model.com/abstractions (niveles) y https://c4model.com/diagrams/notation (título, leyenda, siglas y etiquetas).
+3. Object Management Group (2017). *OMG Unified Modeling Language, versión 2.5.1* (formal/17-12-05). Especificación oficial: https://www.omg.org/spec/UML/2.5.1/PDF . Consulté la ficha oficial, https://www.omg.org/spec/UML/About-UML/ ; la notación no la leí en el PDF.
+4. Song, I.-Y., Evans, M. y Park, E. K. (1995). A Comparative Analysis of Entity-Relationship Diagrams. *Journal of Computer and Software Engineering, 3*(4), 427-459. Artículo de revista: https://www.cin.ufpe.br/~in1008/aulas/A%20Comparative%20Analysis%20of%20Entity-Relationship%20Diagrams.pdf . Consulta directa del PDF: la notación de mínimo y máximo de Information Engineering.
+
 ---
 
 ## 2. Estructura estándar (esqueleto de todo proyecto)
 
 ```
 proyecto/
-|- README.md                # indice publico, punto de entrada        (SUBE)
-|- <carpetas-de-contenido>/ # lo especifico del proyecto              (SUBE)
+|- README.md                # índice público, punto de entrada        (SUBE)
+|- <carpetas-de-contenido>/ # lo específico del proyecto              (SUBE)
 |- building/                # enlace a Drive, mi capa    (NO SUBE - .gitignore)
    |- sealed_state.md       # lo decidido firme. se LEE primero, siempre.
-   |- personal_index.md     # tablero de posicion: en que parte voy
-   |- roadmap.md            # hacia donde, en que orden
-   |- decision_log.md       # por que decidi X
-   |- correction_log.md     # donde me equivoque y que aprendi
+   |- personal_index.md     # tablero de posición: en qué parte voy
+   |- roadmap.md            # hacia dónde, en qué orden
+   |- decision_log.md       # por qué decidí X
+   |- correction_log.md     # dónde me equivoqué y qué aprendí
 ```
 
-La capa de construcción (`building/`) es la de la sección 1: mía, personal, fuera de Git.
+`building/` es mi capa de construcción: personal, fuera de Git.
 
-**Proyectos sin Git:** el esqueleto y las dos naturalezas se mantienen, pero la separación oficial/construcción deja de ser división de almacenamiento (sube/no sube) y pasa a ser solo división de visibilidad dentro de la misma carpeta: lo oficial es lo que podría compartir; `building/` sigue siendo mío. El respaldo cambia de alcance (sección 7).
+**Proyectos sin Git:** el esqueleto y las dos naturalezas se mantienen, pero la separación oficial/construcción deja de ser división de almacenamiento (sube/no sube) y pasa a ser solo división de visibilidad dentro de la misma carpeta: lo oficial es lo que podría compartir; `building/` sigue siendo mío. Y el respaldo pasa a ser de la carpeta completa, no solo de `building/`.
 
 ---
 
@@ -55,6 +89,7 @@ La capa de construcción (`building/`) es la de la sección 1: mía, personal, f
 - Es **corto**. Lista de decisiones firmes por frente: "esto ya está cerrado, no reabrir".
 - No es la bitácora larga. Es el resumen vivo de lo que no se toca.
 - **Se LEE al empezar cualquier frente, antes de ejecutar.** El documento no sirve por existir, sirve por consultarse antes. Ese es el paso que se me olvida y el que rompe el ciclo de reabrir lo cerrado.
+- **Lo ESCRIBO en el mismo momento en que tomo la decisión**, igual que los logs, y lo mismo el `roadmap.md`. Si lo dejo para el cierre, el documento que leo primero contradice a los logs.
 
 ---
 
@@ -75,10 +110,11 @@ Las respuestas son las **primeras decisiones selladas** de `sealed_state.md` y l
 Para el resto de frentes:
 
 - **Una conversación = un frente.** No mezclar temas.
-- **Al abrir:** pego el `sealed_state` del frente + subo los documentos que *ese* frente edita.
-- **Documentos de otros frentes:** NO los subo enteros. Pego su decisión sellada (3 líneas). El estado sellado es la **interfaz entre frentes**.
+- **Al abrir:** apunto a los archivos que *ese* frente lee y edita (ruta y, si hace falta, las entradas). Solo pego contenido si quien trabaja conmigo, persona o IA, no puede leer los archivos: lo pegado se pierde, el archivo queda.
+- **Documentos de otros frentes:** no los cargo enteros. Apunto a su decisión sellada, o la pego en 3 líneas si el archivo no se puede leer. El estado sellado es la **interfaz entre frentes**.
 - **Si surge otro frente en medio** (y va a surgir): lo anoto en una línea y sigo. No lo persigo. Perseguirlo es rodar.
-- **Al cerrar:** pido los documentos actualizados y actualizo `sealed_state` si hubo decisión nueva.
+- **Durante:** cada decisión va al `decision_log` en el momento en que la tomo, y cada corrección al `correction_log`; `sealed_state` y `roadmap` se actualizan en ese mismo momento. Lo que solo vive en una conversación no existe.
+- **Al cerrar:** reviso que `sealed_state` y `roadmap` no contradigan a los logs y actualizo `personal_index` (en qué parte voy).
 
 ### Especie de las preguntas abiertas
 
@@ -89,6 +125,8 @@ Toda pregunta abierta lleva **especie** y **dueño**:
 
 Sin dueño la pregunta se pudre. Sin especie alguien "investiga" afuera algo que solo se resuelve decidiendo.
 
+Cuando le pregunto al cliente por una regla, se la pregunto sobre un caso real con números, no en abstracto: en abstracto cada uno entiende otra cosa y la respuesta vuelve contestando otra pregunta. No "¿cómo se calcula el descuento?", sino "si alguien compra 3 unidades de $50.000, ¿cuánto paga?".
+
 ---
 
 ## 5. El log de correcciones (lo que rompe el ciclo)
@@ -96,7 +134,7 @@ Sin dueño la pregunta se pudre. Sin especie alguien "investiga" afuera algo que
 - Uno **por proyecto** (`correction_log.md`), no global. Cada proyecto corrige lo suyo.
 - **Disparador mecánico, no juicio de madurez:** si tocó volver atrás sobre algo **escrito y cerrado** -> una entrada. "Es que el proyecto no estaba cimentado" es la excusa que reaparece siempre; el disparador no la escucha.
 - Cambiar de opinión antes de que exista algo sellado es **explorar, no corregir**: eso no entra. Entra lo que quedó escrito y tocó devolver, no lo que murió en una conversación.
-- **Formato corto:** fecha (AAAA-MM-DD, sección 6) | qué decidí mal | qué me obligó a cambiarlo | qué aprendo.
+- **Formato corto:** fecha completa (AAAA-MM-DD) | qué decidí mal | qué me obligó a cambiarlo | qué aprendo.
 - Se lee junto al `sealed_state` al empezar.
 
 ---
@@ -115,7 +153,7 @@ Sin dueño la pregunta se pudre. Sin especie alguien "investiga" afuera algo que
 
 **Contenido que se lee** (el texto dentro de los documentos, salidas de consola para personas) - español correcto y natural, **con** tildes, ñ y puntuación. La regla de inglés/ASCII es solo para identificadores, **nunca** para la prosa que alguien va a leer.
 
-**Caracteres tecleables:** todo contenido que mantengo (documentos oficiales y `building/`) usa solo caracteres de mi teclado (layout latinoamericano). Reemplazos fijos: rayas largas -> `-`, flechas unicode -> `->`, comillas tipográficas -> rectas, puntos suspensivos unicode -> `...`, dibujo de árboles -> `|-`. Separador de campos en logs: `|`. Los signos estructurales (`#`, `*`, listas, tablas) los gobierna markdown - formato externo, principio de precedencia. Lo generado por herramientas se ajusta a este alfabeto antes de integrarse.
+**Caracteres tecleables:** todo contenido que mantengo (documentos oficiales y `building/`), incluido el texto dentro de los diagramas (etiquetas, leyendas, notas), usa solo caracteres de mi teclado (layout latinoamericano). Reemplazos fijos: rayas largas -> `-`, flechas unicode -> `->`, comillas tipográficas -> rectas, puntos suspensivos unicode -> `...`, dibujo de árboles -> `|-`. Separador de campos en logs: `|`. Los signos estructurales (`#`, `*`, listas, tablas) los gobierna markdown - formato externo, principio de precedencia. Lo generado por herramientas se ajusta a este alfabeto antes de integrarse.
 
 **Fechas:** en logs y registros, completas y en formato `AAAA-MM-DD` (año-mes-día). El mes solo no alcanza: no deja ver qué se decidió un día concreto. Lo que ya está escrito sin día no se re-fecha a ojo: se completa solo donde hay evidencia (un commit, un archivo, un documento fechado) y lo demás se queda como está.
 
@@ -125,7 +163,7 @@ Sin dueño la pregunta se pudre. Sin especie alguien "investiga" afuera algo que
 
 ## 7. Reglas contra los puntos ciegos
 
-- `building/` no sube a Git -> está en el `.gitignore` estándar de todo proyecto (regla en `git_method.md`) y se **respalda aparte**. Es lo más valioso y sería lo único sin copia. Respaldo por defecto: **Google Drive, cuenta personal** - nunca cuentas que puedo perder (la universitaria se pierde al graduarme). En proyectos con Git, lo oficial ya tiene copia en el remoto: se respalda solo `building/`. En proyectos sin Git se respalda la **carpeta completa** del proyecto. En ambos casos el respaldo es **obligatorio**, no opcional. En proyectos con Git, `building/` vive en Drive (`Mi unidad\proyectos\building\<proyecto>`) y en el repo queda un enlace (junction) a esa carpeta: se edita en un solo lugar y Drive la sube sola. Se crea al abrir el proyecto, desde la raíz del repo: `New-Item -ItemType Junction -Path building -Target "<ruta en Mi unidad>"`. Git lo trata como carpeta, así que la línea `building/` del `.gitignore` sigue sirviendo. En proyectos sin Git el respaldo de la carpeta completa sigue siendo manual. Proyectos de un empleador/cliente: por ahora se respaldan igual en mi Drive personal; queda pendiente transferir ese material a infraestructura del empleador cuando exista - la responsabilidad de que tenga copia es mía mientras tanto.
+- `building/` no sube a Git -> está en el `.gitignore` de todo proyecto y se **respalda aparte**. Es lo más valioso y sería lo único sin copia. Respaldo por defecto: **Google Drive, cuenta personal** - nunca cuentas que puedo perder (la universitaria se pierde al graduarme). En proyectos con Git, lo oficial ya tiene copia en el remoto: se respalda solo `building/`. En proyectos sin Git se respalda la **carpeta completa** del proyecto. En ambos casos el respaldo es **obligatorio**, no opcional. En proyectos con Git, `building/` vive en Drive (`Mi unidad\proyectos\building\<proyecto>`) y en el repo queda un enlace (junction) a esa carpeta: se edita en un solo lugar y Drive la sube sola. Se crea al abrir el proyecto, desde la raíz del repo: `New-Item -ItemType Junction -Path building -Target "<ruta en Mi unidad>"`. Git lo trata como carpeta, así que la línea `building/` del `.gitignore` sigue sirviendo. En proyectos sin Git el respaldo de la carpeta completa sigue siendo manual. Proyectos de un empleador/cliente: por ahora se respaldan igual en mi Drive personal; queda pendiente transferir ese material a infraestructura del empleador cuando exista - la responsabilidad de que tenga copia es mía mientras tanto.
 - Todo en `building/` se escribe **corto**: fecha completa + verbo + resultado. Si da pereza mantenerlo, está mal escrito.
 - El modelo se prueba **terminando** algo con él. Si me descubro puliendo el modelo en vez de usarlo, ese es el síntoma: parar y ejecutar.
 
@@ -139,8 +177,9 @@ Este documento es SOLO documentación y ejecución de proyectos. Git y GitHub ->
 
 ### Log de correcciones del modelo
 
-**Formato:** fecha (AAAA-MM-DD) | vX -> vY | qué decidí mal | qué me obligó a cambiarlo | qué aprendo. Extiende el formato de la sección 5 con el rango de versión, porque este log versiona el modelo mismo.
+**Formato:** fecha (AAAA-MM-DD) | vX -> vY | qué decidí mal | qué me obligó a cambiarlo | qué aprendo. Es el formato del log de correcciones de cada proyecto más el rango de versión, porque este log versiona el modelo mismo.
 
+- 2026-11-19 | v1.7 -> v1.8 | (1) no tener reglas para diagramas: vista, notación, lector, título, leyenda, siglas, etiquetas, conceptual y físico; (2) no pedir en las referencias URL ni forma de consulta, ni verificarlas, ni pedir base normativa ni principios explícitos; (3) dejar "se propaga" sin decir a dónde; (4) escribir las decisiones y actualizar `sealed_state` al cerrar el frente, y abrir frentes pegando contenido; (5) preguntarle al cliente las reglas en abstracto; (6) escribir secciones que solo se entendían yendo a otra parte; (7) dejar sin tildes el árbol de la sección 2, contra mi propia regla de escritura | usar el método en un proyecto de cliente con diagramas de arquitectura y de datos (la traza a sus logs está en `building/decision_log.md` de este repo, 2026-11-19): los diagramas mezclaban notaciones y no decían para quién eran, las referencias quedaron sin URL, la leyenda no describía lo que se veía, cambios del dominio no llegaron a todos los documentos, un mecanismo siguió funcionando cuando su razón ya no existía, decisiones que solo estaban en la conversación se perdieron al resumirse, `sealed_state` quedó contradiciendo a los logs y una pregunta al cliente se entendió como otra. Al escribir esta versión, las secciones nuevas mandaban a otras partes para entenderse y una norma citada no decía lo que se le atribuía; y el árbol de la sección 2 seguía sin tildes | un diagrama sin vista, notación, lector y leyenda no le habla a nadie, y la leyenda se comprueba dibujando; propagar es recorrer todo lugar donde vive el hecho, también cuando cambia la razón de una decisión; lo que no está en un archivo no existe, y el documento que leo primero se escribe con la misma urgencia que los logs; una referencia se abre y se confirma antes de citarla; y cada sección se entiende donde está, el porqué va en este log. Todo va en este documento: no nace un design_method.md, porque solo una parte es de diagramas y la evidencia sale de un solo proyecto. Las secciones no se renumeran porque otros documentos las citan por número.
 - 2026-11-18 | v1.6 -> v1.7 | dejar el respaldo de `building/` como sincronización manual de la carpeta | en core-kioto el respaldo manual estuvo en pendientes desde julio y nunca se hizo: `building/` pasó cuatro meses sin copia, que es justo lo que esta regla debía evitar | un respaldo que depende de acordarme no es respaldo; si se puede dejar automático con lo que ya tengo (Drive en modo espejo + un enlace de carpeta), se deja automático. Probado en core-kioto: el enlace muestra los archivos y Git lo sigue ignorando con `building/`.
 - 2026-09-24 | v1.5 -> v1.6 | dejar la fecha de los logs sin formato y escribirla al mes | al leer el decision_log de arkhon quise ver qué se había decidido ese día y no se podía: una semana entera de decisiones quedó con la misma fecha, "2026-09" | la fecha de un log existe para leerlo, no para archivarlo, así que se escribe completa. Y lo viejo no se re-fecha a ojo: se completa donde hay evidencia y lo demás queda como está.
 - 2026-07 | v1.4 -> v1.5 | (1) no fijar dueño del dato ni política de duplicación por nivel de documento: los internos navegan con apuntadores, pero un oficial que lee un tercero en frío tiene que leerse solo, y eso nunca estuvo escrito; (2) no separar el contenido de dominio (qué es el mundo) del de diseño (qué hace el sistema), dos capas con vidas distintas; (3) no clasificar las preguntas abiertas por especie (hecho por levantar / decisión pendiente) ni exigirles dueño; (4) dejar el disparador del log de correcciones sujeto a interpretación: "deshago algo ya decidido" no exigía que estuviera escrito y cerrado | usar el método en un proyecto con documentos oficiales para terceros: hechos repetidos quedaron sin fuente clara, preguntas abiertas sin especie se "investigaron" cuando solo había que decidir y sin dueño se pudrieron, y la excusa "el proyecto no estaba cimentado" bloqueó entradas del log que sí correspondían | los principios de contenido se asientan en la capa de método, no se reinventan por proyecto; un disparador mecánico ("quedó escrito y tocó devolver") resiste las excusas que un juicio de madurez no
