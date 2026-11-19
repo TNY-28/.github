@@ -1,4 +1,4 @@
-# Git Method - Anthony Arango (v4)
+# Git Method - Anthony Arango (v5)
 
 Mi método personal para trabajar con Git y GitHub.
 Aplica a todos mis proyectos. Las reglas FIJAS son innegociables.
@@ -64,8 +64,8 @@ Nunca commitear (además de secretos):
 - `node_modules/`, `dist/`, `build/`, `__pycache__/`, `venv/`, `.venv/`
 - Archivos de IDE, salvo que se compartan a propósito
 - Dumps de base de datos, backups, datos de clientes o información laboral confidencial
-- `building/` - capa de construcción personal de cada proyecto
-  (definida en doc_method.md); se respalda aparte, nunca en el repo
+- `building/` - mis notas de construcción de cada proyecto (estado sellado,
+  logs, roadmap); son mías, viven en mi Drive y nunca entran al repo
 
 ### Gists
 
@@ -141,7 +141,7 @@ Workflow templates disponibles en este repo (`workflow-templates/`). Son punto d
 | Solo, proyecto profesional | Issues para bugs y features. Registro de decisiones |
 | Colaborativo | Issues + PRs obligatorios. Usar templates |
 
-Cuando un proyecto usa issues (según la tabla ya existente), agrupar por tipo con el mismo criterio que los commits:
+Cuando un proyecto usa issues (según la tabla de arriba), agrupar por tipo con el mismo criterio que los commits:
 
 - Tipo: `type:feature`, `type:bug`, `type:docs`, `type:refactor`, `type:chore`
 - Prioridad: `priority:high`, `priority:medium`, `priority:low`
@@ -229,7 +229,7 @@ de los proyectos activos, no una lista central.
 
 ### Antes de tomar, asignar o revisar un issue o PR (trabajo colaborativo)
 
-El estado de un issue no está en su cuerpo, está en lo que pasa a su alrededor, y con más de una persona empujando se vence en minutos. Es un hecho por levantar (`doc_method.md`, sección 4): se resuelve yendo a mirar, antes de asignar, recomendar o escribir un brief.
+El estado de un issue no está en su cuerpo, está en lo que pasa a su alrededor, y con más de una persona empujando se vence en minutos. Eso no se decide ni se supone: se resuelve yendo a mirar, antes de asignar, recomendar o escribir un brief.
 
 1. **El issue:** abierto o cerrado, dueño y prioridad.
 2. **Lo que lo toca:** PRs abiertos o mergeados que lo citan, ramas con su número, y fecha y autor del último commit.
@@ -238,7 +238,7 @@ El estado de un issue no está en su cuerpo, está en lo que pasa a su alrededor
 
 Si falta alguno de los cuatro, el primer paso es de reconocimiento, no de ejecución.
 
-El esfuerzo se dirige por el criterio, no por lo que está a la mano: primero lo que bloquea la entrega, y la profundidad de una revisión sigue al criterio que el PR sirve (lo que bloquea se revisa contra el texto del criterio y corriéndolo; lo que solo suma evidencia, leído y con el CI). La técnica de revisión vive en la skill `qa-review` de cada proyecto; esto solo decide a qué se le aplica y cuándo.
+El esfuerzo se dirige por el criterio, no por lo que está a la mano: primero lo que bloquea la entrega, y la profundidad de una revisión sigue al criterio que el PR sirve (lo que bloquea se revisa contra el texto del criterio y corriéndolo; lo que solo suma evidencia, leído y con el CI). Cómo se revisa un PR lo define cada proyecto; esta regla solo decide a qué se le aplica la revisión y cuándo.
 
 ### Contribuir a proyectos externos (fork)
 
@@ -284,10 +284,9 @@ Este documento es SOLO Git y GitHub.
 - **Stack y herramientas** -> se decide por proyecto, no globalmente. Cada proyecto elige su stack
 - **Organización digital** -> proyecto aparte (estructura de carpetas, cuentas, PC)
 
-Git se acopla al método general porque:
-- El método define fases (pensar -> verificar -> construir)
-- Git entra en la fase de construir: cuando ya se decidió QUÉ hacer, Git registra el CÓMO se hizo
-- Los commits reflejan cambios concretos del código, no fases del plan
+Git se acopla al resto del método así:
+- Git entra cuando ya decidí QUÉ hacer: registra el CÓMO se hizo
+- Los commits reflejan cambios concretos del código, no las etapas del plan
 
 **Precedencia entre capas:** este documento hereda de `doc_method.md` las reglas transversales (idioma, alfabeto tecleable, `building/`, respaldo) y no las redefine - solo agrega lo propio de Git y GitHub. En caso de conflicto, gana `doc_method.md`.
 
@@ -299,6 +298,8 @@ Git se acopla al método general porque:
 
 - **2026-11-05 | v3 -> v4 |** Decidí mal: asignar, recomendar y escribir briefs sobre issues y PRs de un equipo tomando como única fuente el cuerpo del issue o un archivo, y repartir el esfuerzo por lo que quedaba a mano. Qué me obligó a cambiarlo: en arkhon, a cinco días de la entrega, el mismo error se repitió en varios frentes: una rama citada en un brief sin verificarla, una firma recomendada sin leer el ADR que ya la decidía, y un issue dado por pendiente cuando su PR llevaba doce días mergeado. Entre tanto, el esfuerzo de la noche fue a un criterio adicional mientras dos issues P0 del caso 3 seguían, uno sin rama y otro sin commits desde el 2026-10-23. Qué aprendo: el estado de un issue vive en sus PRs, ramas y commits, y se levanta antes de decidir; el esfuerzo se dirige por el criterio que bloquea la entrega. La técnica de revisión no era el hueco (ya está en la skill `qa-review`): lo era lo que se hace antes de revisar.
 
+
+- **2026-11-19 | v4 -> v5 |** Decidí mal: escribir secciones que solo se entendían yendo a otra parte. La regla de `building/` mandaba a doc_method para saber qué era; la de issues explicaba con una sección de doc_method por qué el estado se levanta mirando; la relación con el método hablaba de unas fases (pensar -> verificar -> construir) que ningún documento define; y la técnica de revisión se nombraba por una herramienta que no está en el método. Qué me obligó a cambiarlo: al revisar doc_method v1.8 vi que sus secciones nuevas mandaban al log y a otras secciones para entenderse, y al pasar este documento por la misma vara salieron estos cuatro casos. Un documento oficial tiene que leerse solo. Qué aprendo: cada sección dice lo suficiente para entenderse donde está; remitir a otra capa solo vale para la precedencia entre capas, y el porqué de un cambio va en este log, no en el texto.
 ---
 
 ## 8. Filosofía
