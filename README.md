@@ -3,7 +3,7 @@
 Global templates and working method for all my repos.
 
 The issue and PR templates here apply automatically as defaults to
-all my public repos that don't define their own.
+all my repos that don't define their own.
 
 ## Contents
 
@@ -53,6 +53,11 @@ Structure:
 - Two document natures: project docs (public, in Git) vs building
   docs (personal, gitignored)
 - Standard project skeleton with a `building/` layer
+- Content rules: who owns each fact, references with URL and how they
+  were consulted, explicit design principles
+- Diagram conventions: each diagram answers a specific reader, one
+  notation per view (C4, UML, crow's foot ER), legends checked by drawing
+- Decisions go to the logs when they are made, not at the end
 - Naming conventions: identifiers in English, prose in Spanish
 - Correction log that versions the model itself
 
@@ -66,6 +71,3 @@ Structure:
 - Templates and workflows are a starting point, not rigid rules
 - Each project adjusts what it needs, documenting why
 - If an adaptable rule repeats across every project, it gets promoted to fixed
-
----
-*Built with AI assistance (Claude). Review and decisions by Anthony Arango.*
