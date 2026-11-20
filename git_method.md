@@ -1,4 +1,4 @@
-# Git Method - Anthony Arango (v5)
+# Git Method - Anthony Arango (v6)
 
 Mi método personal para trabajar con Git y GitHub.
 Aplica a todos mis proyectos. Las reglas FIJAS son innegociables.
@@ -86,10 +86,13 @@ Cada proyecto documenta sus decisiones en su propia bitácora, usando el formato
 |----------|-----------|
 | Solo, repo privado, sin colaboradores | Directo a `main` para cambios menores. Rama local para features grandes o experimentales |
 | Solo, pero con posibilidad de colaboración | Ramas con merge local. PRs opcionales para documentar decisiones |
-| Colaborativo | Siempre rama + PR. Nunca push directo a `main` |
+| Colaborativo | Siempre rama + PR hacia `main`. Nunca push directo a `main` |
 
-**Nombres de ramas (cuando se usen):** `tipo/descripcion-corta`
+En un repo colaborativo los PR van a `main`, la rama por defecto, y no a una rama de integración aparte: `Closes #N` solo cierra el issue cuando el PR se mergea a la rama por defecto.
+
+**Nombres de ramas (cuando se usen):** `tipo/descripcion-corta`, y si la rama resuelve un issue, `tipo/NNN-descripcion-corta` con el número del issue
 - `feature/login-form`, `fix/api-timeout`, `docs/update-readme`
+- `feature/42-login-form`, `fix/57-api-timeout`
 
 ### Estrategia de merge
 
@@ -98,6 +101,8 @@ Cada proyecto documenta sus decisiones en su propia bitácora, usando el formato
 | PR con muchos commits tipo "wip" | Squash merge |
 | PR donde cada commit ya cuenta su propia historia | Merge normal |
 | Rebase de una rama compartida después de que otros ya hicieron pull | Nunca |
+
+En un repo colaborativo el método elegido se deja como el único habilitado en la configuración del repo, y el borrado de la rama al mergear queda activo. El título del PR va en formato Conventional Commits, porque con squash se vuelve el header del commit.
 
 ### Versionado y releases
 
@@ -141,13 +146,27 @@ Workflow templates disponibles en este repo (`workflow-templates/`). Son punto d
 | Solo, proyecto profesional | Issues para bugs y features. Registro de decisiones |
 | Colaborativo | Issues + PRs obligatorios. Usar templates |
 
-Cuando un proyecto usa issues (según la tabla de arriba), agrupar por tipo con el mismo criterio que los commits:
+Cuando un proyecto usa issues (según la tabla de arriba):
 
-- Tipo: `type:feature`, `type:bug`, `type:docs`, `type:refactor`, `type:chore`
-- Prioridad: `priority:high`, `priority:medium`, `priority:low`
-- Estado: `status:in-progress`, `status:blocked`, `status:review`
+- **Tipo:** los mismos tipos de los commits, sin prefijo: `feat`, `fix`, `docs`, `refactor`, `chore`, `test`. Un solo vocabulario para commits y labels.
+- **Prioridad:** `P0`, `P1`, `P2`, atadas al criterio de terminación de la iteración. `P0` es parte de ese criterio y no se corta; `P1` se hace si lo `P0` va en tiempo; `P2` queda fuera de la iteración. Sin criterio no hay prioridad.
+- **Estado:** no va en labels. Si el proyecto usa tablero (GitHub Projects), el estado vive en su campo Status; si no, abierto o cerrado.
+- **Decisión:** `decision`, para un issue que abre una decisión de diseño discutible. Se cierra cuando la decisión queda escrita en su registro de decisión (ADR).
+- **Épica:** `epic`, para un issue que agrupa varios issues hacia un resultado más grande. Sus issues hijos llevan una label `epic:<nombre>`. La épica no la cierra un PR: se cierra cuando se cierran sus hijos y se cumple su criterio. No lleva lista de tareas que haya que marcar a mano.
 
-Un issue se cierra solo al mergear el PR que lo resuelve, usando `Closes #N` en la descripción del PR.
+Cada issue dice cómo se ve terminado ("Terminado cuando"). Las plantillas lo piden, y los issues en blanco quedan apagados en todos mis repos, también en los personales, para que todo issue nazca con estructura (`blank_issues_enabled: false` en `ISSUE_TEMPLATE/config.yml`). Un repo con plantillas propias no hereda nada de la carpeta de este repo, así que lleva su propio `config.yml` con esa línea.
+
+Un issue se cierra al mergear el PR que lo resuelve, con `Closes #N` en la descripción del PR. Si el PR no va a la rama por defecto, GitHub no lo cierra: se cierra a mano, con un comentario que cite el PR.
+
+### Repo en grupo: lo que se configura
+
+Lo que una regla exige se deja configurado en el repo. Lo que depende de acordarse se termina desviando. Al formar equipo:
+
+1. **Ruleset en `main`:** PR obligatorio con 1 aprobación, el CI como check requerido, sin borrado de la rama y sin force push.
+2. **Merge:** solo el método elegido habilitado y borrado de la rama al mergear activo (ver "Estrategia de merge").
+3. **Labels:** se crean las de tipo, prioridad, `decision` y `epic` antes de usar las plantillas. Una label que pone una plantilla tiene que existir en cada repo donde se use.
+4. **CODEOWNERS:** solo si importa quién aprueba. Con varios dueños en la misma ruta y una sola aprobación requerida, los demás quedan con la solicitud de revisión pendiente; es lo esperado, no un descuido.
+5. **Tablero (GitHub Projects):** solo el campo Status. Prioridad ya va en labels, y un campo que nadie llena no informa nada.
 
 ### Visibilidad del repo
 
@@ -238,7 +257,15 @@ El estado de un issue no está en su cuerpo, está en lo que pasa a su alrededor
 
 Si falta alguno de los cuatro, el primer paso es de reconocimiento, no de ejecución.
 
-El esfuerzo se dirige por el criterio, no por lo que está a la mano: primero lo que bloquea la entrega, y la profundidad de una revisión sigue al criterio que el PR sirve (lo que bloquea se revisa contra el texto del criterio y corriéndolo; lo que solo suma evidencia, leído y con el CI). Cómo se revisa un PR lo define cada proyecto; esta regla solo decide a qué se le aplica la revisión y cuándo.
+El esfuerzo se dirige por el criterio, no por lo que está a la mano: primero lo que bloquea la entrega, y la profundidad de una revisión sigue al criterio que el PR sirve (lo que bloquea se revisa contra el texto del criterio y corriéndolo; lo que solo suma evidencia, leído y con el CI). Qué se comprueba en una revisión lo define cada proyecto; esta regla decide a qué se le aplica la revisión y cuándo.
+
+### Cómo escribo una revisión de PR
+
+- La revisión va en el cuerpo de la review, no en comentarios sueltos por línea.
+- Empieza con un veredicto: aprobar o pedir cambios.
+- Los hallazgos van numerados como `(1)`, `(2)`, nunca `#1`, que GitHub convierte en enlace a un issue.
+- Cada hallazgo dice si bloquea: `[BLOQUEANTE]` impide el merge; `[ADVERTENCIA]` se arregla o se pospone diciendo por qué; `[SUGERENCIA]` queda a criterio del autor.
+- Quien abrió el PR responde punto por punto: atendido, pospuesto o rechazado, con su razón.
 
 ### Contribuir a proyectos externos (fork)
 
@@ -300,6 +327,9 @@ Git se acopla al resto del método así:
 
 
 - **2026-11-19 | v4 -> v5 |** Decidí mal: escribir secciones que solo se entendían yendo a otra parte. La regla de `building/` mandaba a doc_method para saber qué era; la de issues explicaba con una sección de doc_method por qué el estado se levanta mirando; la relación con el método hablaba de unas fases (pensar -> verificar -> construir) que ningún documento define; y la técnica de revisión se nombraba por una herramienta que no está en el método. Qué me obligó a cambiarlo: al revisar doc_method v1.8 vi que sus secciones nuevas mandaban al log y a otras secciones para entenderse, y al pasar este documento por la misma vara salieron estos cuatro casos. Un documento oficial tiene que leerse solo. Qué aprendo: cada sección dice lo suficiente para entenderse donde está; remitir a otra capa solo vale para la precedencia entre capas, y el porqué de un cambio va en este log, no en el texto.
+
+- **2026-11-20 | v5 -> v6 |** Decidí mal: (1) dar por hecho que `Closes #N` cierra el issue al mergear, sin decir que solo pasa cuando el PR va a la rama por defecto; (2) proponer labels con prefijo (`type:`, `priority:`) y un grupo de estado que repetía lo que ya lleva un tablero; (3) no decir nada de cómo se configura un repo en grupo, cómo se escribe una revisión, cómo se agrupan issues en épicas ni cómo se cierra un issue que abre una decisión. Qué me obligó a cambiarlo: el primer proyecto en grupo donde trabajé con issues, PRs, revisiones y tablero de principio a fin. El equipo integraba en una rama distinta a la por defecto y ningún issue se cerró solo; las labels que se usaron fueron los tipos de commit sin prefijo y una prioridad atada al criterio de terminación; el estado vivió en el tablero; las revisiones se escribieron en el cuerpo de la review, con veredicto y hallazgos marcados por si bloqueaban. Lo que el repo exigía por configuración (aprobación y CI) se cumplió siempre, y lo que solo estaba escrito (un único método de merge, borrar las ramas, marcar a mano el avance de las épicas) se desvió. Qué aprendo: lo que una regla exige se deja configurado; lo escrito sin configuración se vuelve opcional. Y de un proyecto en grupo entra al método lo que usaron varias personas, no lo que quedó escrito.
+
 ---
 
 ## 8. Filosofía
