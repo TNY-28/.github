@@ -9,8 +9,16 @@ all my repos that don't define their own.
 
 ### Templates
 
-- **Issue Templates** - Bug reports and feature requests (`ISSUE_TEMPLATE/`)
-- **PR Template** - Checklist for pull requests (`PULL_REQUEST_TEMPLATE.md`)
+- **Issue Templates** (`ISSUE_TEMPLATE/`) - Feature, task, bug, decision
+  (ADR) and epic. Each one asks for a "Done when" condition
+- **Issue template config** (`ISSUE_TEMPLATE/config.yml`) - Turns off blank
+  issues, so every issue starts from a template
+- **PR Template** (`PULL_REQUEST_TEMPLATE.md`) - Summary, linked issue, what
+  changed, decisions, how it was tested, done criteria and a checklist
+
+The templates add the labels `feat`, `fix`, `chore`, `decision` and `epic`.
+GitHub only applies a label that already exists in the repo, so each repo
+creates them first.
 
 ### Workflow Templates
 
@@ -40,7 +48,12 @@ GitHub feature - personal accounts always need the manual copy step above.)*
 
 Structure:
 - FIXED rules (commits, push, config, AI policy) - don't change
-- ADAPTABLE rules (branches, CI, testing, versioning) - decided per project
+- ADAPTABLE rules (branches, merge, CI, testing, versioning, issues and
+  labels) - decided per project
+- Group repos - what gets configured: branch ruleset, a single merge method,
+  labels, CODEOWNERS and a project board with Status only
+- PR reviews - a verdict and numbered findings, each one marked by whether
+  it blocks the merge
 - Decision framework - questions to define what applies to each project
 - Per-project decisions - format each project uses to log its choices
 
